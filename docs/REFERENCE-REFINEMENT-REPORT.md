@@ -274,7 +274,7 @@ This follow-up preserves the restored RevenueFlow palette, Leak Radar severity r
 
 ### Verification status
 
-- Inline JavaScript syntax: passed in the authoring check after these edits.
-- GitHub Actions source validation and Chromium browser smoke: pending for this branch until the pull request checks complete.
-- Screenshot capture for Revenue Intelligence, Win/Loss, Forecast Analysis and NGN Analytics: added to the browser smoke workflow; screenshots are not claimed as captured until that run succeeds.
+- Inline JavaScript syntax and product-invariant validation: passed in [GitHub Actions run 41706703481](https://github.com/covalent617-commits/revenueflow-reference/actions/runs/41706703481).
+- Chromium browser smoke: passed in [GitHub Actions run 41706703491](https://github.com/covalent617-commits/revenueflow-reference/actions/runs/41706703491). The run opened all 12 report details, verified their report-specific visualisations, checked 24 points across the three-series Revenue Intelligence and Forecast Analysis charts, checked Won/Lost labels, verified NGN chart currency and retained the earlier CFO, Leak Radar, Settings, dashboard and mobile journeys.
+- Updated screenshots were captured and uploaded in the `revenueflow-reference-screenshots` artifact for run 41706703491. New views include the Analytics library, Revenue Intelligence, Win/Loss, Forecast Analysis and NGN Analytics, alongside the CFO, Leak Radar, Forecast, Settings, dashboard and mobile views.
 - No production services, financial records, email/calendar providers or external integrations are connected by these reference-only visuals.
