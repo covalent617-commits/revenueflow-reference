@@ -32,7 +32,37 @@ const fs = require('fs');
 
   await go('analytics');
   if (await page.locator('[data-analyticstab]').count() !== 2) throw new Error('Analytics should expose report library and simulator, not a Forecast tab.');
-  await shot('04-analytics');
+  await shot('04-analytics-library');
+  for (const reportIndex of [0, 2, 8]) {
+    await page.locator('[data-report="' + reportIndex + '"]').click();
+    await page.locator('#modal [data-report-visual]').waitFor();
+    if (await page.locator('#modal .report-metrics .kpi').count() !== 4) throw new Error('Analytics report metrics are missing or generic.');
+    if (reportIndex === 0) {
+      if (await page.locator('#modal [data-chart-point]').count() !== 24) throw new Error('Revenue Intelligence must plot three labelled monthly series.');
+      const legend = await page.locator('#modal .chart-legend').innerText();
+      if (!legend.includes('Booked revenue') || !legend.includes('Invoiced revenue') || !legend.includes('Cash collected')) throw new Error('Revenue Intelligence series legend is incomplete.');
+      await shot('04a-analytics-revenue-intelligence');
+    }
+    if (reportIndex === 2) {
+      if (!(await page.locator('#modal [data-report-visual="donut"]').count())) throw new Error('Win/Loss must use a distinct outcome distribution visual.');
+      const donut = await page.locator('#modal .donut').getAttribute('aria-label');
+      if (!donut.includes('Won') || !donut.includes('Lost')) throw new Error('Won and Lost labels are missing from the outcome visual.');
+      await shot('04b-analytics-win-loss');
+    }
+    if (reportIndex === 8) {
+      if (await page.locator('#modal [data-chart-point]').count() !== 24) throw new Error('Forecast Analysis must plot actual, weighted forecast and target series.');
+      const legend = await page.locator('#modal .chart-legend').innerText();
+      if (!legend.includes('Booked actual') || !legend.includes('Weighted forecast') || !legend.includes('Target')) throw new Error('Forecast Analysis legend is incomplete.');
+      await shot('04c-analytics-forecast-analysis');
+    }
+    await page.locator('#modal [data-action="close-modal"]').click();
+  }
+  for (let reportIndex = 0; reportIndex < 12; reportIndex++) {
+    await page.locator('[data-report="' + reportIndex + '"]').click();
+    await page.locator('#modal [data-report-visual]').waitFor();
+    if ((await page.locator('#modal').innerText()).includes('index points')) throw new Error('Generic index-point chart remains in report ' + reportIndex + '.');
+    await page.locator('#modal [data-action="close-modal"]').click();
+  }
 
   await go('forecast');
   const points = page.locator('[data-chart-point]');
@@ -60,7 +90,14 @@ const fs = require('fs');
   await go('cfo');
   const cfoText = await page.locator('#content').innerText();
   if (!cfoText.includes('₦')) throw new Error('NGN display did not use the Nigerian naira symbol.');
+  if (!cfoText.includes('Monthly payments reconciled as received · NGN')) throw new Error('CFO chart subtitle did not follow the organisation currency.');
   await shot('07-cfo-naira');
+  await go('analytics');
+  await page.locator('[data-report="0"]').click();
+  if (!(await page.locator('#modal').innerText()).includes('₦')) throw new Error('Analytics report currency did not follow NGN.');
+  if (!(await page.locator('#modal [data-chart-unit="NGN"]').count())) throw new Error('Analytics chart unit label did not follow NGN.');
+  await shot('07a-analytics-naira');
+  await page.locator('#modal [data-action="close-modal"]').click();
 
   await go('dashboard');
   const before = await page.locator('#dashboardWidgets [data-widget]').evaluateAll(nodes => nodes.map(n => n.dataset.widget).join(','));

@@ -257,3 +257,24 @@ The following are not claimed as production functionality:
 - `.github/workflows/reference-browser-smoke.yml` and `scripts/capture-reference-screenshots.cjs` — Chromium journey checks and screenshot artifact generation.
 - `.github/workflows/reference-browser-smoke.yml` and `scripts/capture-reference-screenshots.cjs` — Chromium journey checks and screenshot artifact generation.
 
+
+
+## 11. Additive Analytics visual-precision pass
+
+This follow-up preserves the restored RevenueFlow palette, Leak Radar severity ring, distinct workspace layouts, membership model and fully accessible CFO preview already present on the refinement base.
+
+### Implemented in the reference branch
+
+- Replaced the generic Analytics report fallback with report-specific measures and chart types across all 12 reports.
+- Revenue Intelligence now plots three separately coloured monthly series: booked revenue (green/teal), invoiced revenue (blue), and cash collected (cyan). Each point exposes its date, series and exact currency-formatted value.
+- Pipeline Performance uses stage-count bars; Win/Loss uses a labelled Won/Lost distribution with green/teal versus red/coral; Follow-up Performance uses percentage trend lines; Leak Radar Intelligence uses severity-count bars; Customer Intelligence uses a labelled health distribution; Quote Performance uses status counts; Team Performance uses workload counts; Forecast Analysis uses actual, weighted forecast and target lines; Competitor Intelligence uses mention counts; Process Performance uses percentage trends; Intervention Outcomes uses distinct current-state counts.
+- Removed the generic “index points” fallback from report details and replaced unrelated universal monetary KPIs with report-specific measures, values, units and definitions.
+- Chart currency labels, y-axis formatting, legends and tooltips now follow the active organisation display currency. NGN display is formatting only and does not perform FX conversion.
+- Expanded the browser smoke script to open and inspect report detail views, verify 24 plotted points across three-series charts, confirm Won/Lost labels and ensure all 12 reports use a typed visualisation.
+
+### Verification status
+
+- Inline JavaScript syntax: passed in the authoring check after these edits.
+- GitHub Actions source validation and Chromium browser smoke: pending for this branch until the pull request checks complete.
+- Screenshot capture for Revenue Intelligence, Win/Loss, Forecast Analysis and NGN Analytics: added to the browser smoke workflow; screenshots are not claimed as captured until that run succeeds.
+- No production services, financial records, email/calendar providers or external integrations are connected by these reference-only visuals.
