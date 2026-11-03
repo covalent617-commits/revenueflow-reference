@@ -1,0 +1,53 @@
+name: Validate RevenueFlow reference
+on:
+  push:
+    branches: [main, refinement-identity-roles-charts]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Validate inline JavaScript syntax
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          html = Path("index.html").read_text(encoding="utf-8")
+          scripts = re.findall(r"<script>(.*?)</script>", html, re.S)
+          if not scripts:
+              raise SystemExit("No inline application script found")
+          Path("/tmp/revenueflow-reference.js").write_text("\n".join(scripts), encoding="utf-8")
+          PY
+          node --check /tmp/revenueflow-reference.js
+      - name: Check reference navigation and product invariants
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const html = fs.readFileSync('index.html', 'utf8');
+          const navPages = [...html.matchAll(/class="navbtn"[^>]*data-page="([^"]+)"/g)].map(x => x[1]);
+          const mapStart = html.indexOf('let fn={');
+          const mapEnd = html.indexOf("};$('#content')", mapStart);
+          if (mapStart < 0 || mapEnd < 0) throw new Error('Workspace route map not found');
+          const routeText = html.slice(mapStart + 'let fn={'.length, mapEnd);
+          const routes = new Set([...routeText.matchAll(/(?:^|,)\s*([A-Za-z][A-Za-z0-9_]*)\s*(?=:|,)/g)].map(x => x[1]));
+          const missing = [...new Set(navPages)].filter(x => !routes.has(x));
+          if (missing.length) throw new Error('Navigation routes without render handlers: ' + missing.join(', '));
+          const required = [
+            'function riskDistribution()', 'function forecast()', 'function attention()',
+            'function teamWorkspace()', 'function settings()', 'data-chart-point="true"',
+            'function bindDashboardDnD()', 'The organisation itself never has an employee role',
+            'Demo persona · preview only', 'Sales Intelligence', 'Customer Intelligence',
+            'Process Intelligence', 'Revenue Recovery Simulator'
+          ];
+          const absent = required.filter(x => !html.includes(x));
+          if (absent.length) throw new Error('Missing approved reference requirements: ' + absent.join(', '));
+          if (html.includes("function cfo(){if(")) throw new Error('CFO reference preview must remain fully accessible');
+          if (html.includes("['Sales Intelligence','Customer Intelligence','Process Intelligence','")) throw new Error('Unexpected fourth Leak Radar primary tab');
+          console.log('Reference navigation and approved product invariants passed.');
+          NODE
