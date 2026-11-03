@@ -72,6 +72,8 @@ Charts use differentiated series, visible points, date labels, units, legends, h
 
 Implemented reference interactions include navigation, demo persona preview, organisation switching, Settings membership/invitation/role assignment demonstrations, custom role creation preview, search, record details, basic create flows, Leak Radar tab switching, analytics reports, chart tooltips, forecast view, draggable dashboard widgets, simulator controls, saved demo scenarios, email draft/preview/confirmation, portal-link preview and AI assistant interactions.
 
+**Browser verification and screenshots:** Chromium smoke tests passed for the core journeys. The run captured nine screenshots (Dashboard, CFO, Leak Radar, Analytics, Forecast, Settings, NGN CFO, reordered Dashboard and mobile Dashboard). [Open the browser test run and download its screenshot artifact](https://github.com/covalent617-commits/revenueflow-reference/actions/runs/41680693852). The artifact is retained for 14 days.
+
 All business data is illustrative. Local demo changes are held in the browser session only. No production database, payment rail, email provider, calendar, e-signature provider, file storage, authentication service, AI model, or organisation permission service is connected. Provider actions are previews and do not perform external actions.
 
 The reference distinguishes the complete product vision from production implementation. Backend enforcement, tenant isolation, provider integrations, auditability, data retention, document security, legal validation and operational reliability remain implementation requirements.
