@@ -112,7 +112,7 @@ Production financial visibility remains permission-controlled. Making the refere
 
 ## 5. Navigation and duplication corrections
 
-The navigation now has **34 unique destinations**, with a route handler for every navigation item.
+The navigation now has **35 unique destinations**, with a route handler for every navigation item.
 
 Distinct workspaces include:
 - Dashboard.
