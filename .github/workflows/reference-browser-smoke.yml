@@ -1,0 +1,40 @@
+name: Browser smoke and reference screenshots
+on:
+  push:
+    branches: [main, reference-browser-verification]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Playwright
+        run: npm install --no-save playwright
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Serve reference site
+        run: |
+          python -m http.server 4173 --bind 127.0.0.1 > /tmp/revenueflow-http.log 2>&1 &
+          for i in {1..20}; do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/revenueflow-http.log
+          exit 1
+      - name: Test core reference journeys and capture screenshots
+        run: node scripts/capture-reference-screenshots.cjs
+      - name: Upload verified screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: revenueflow-reference-screenshots
+          path: artifacts/*.png
+          retention-days: 14
