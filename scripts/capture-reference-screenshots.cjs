@@ -37,7 +37,7 @@ const fs = require('fs');
   await go('forecast');
   const points = page.locator('[data-chart-point]');
   if (await points.count() < 8) throw new Error('Forecast chart data points are missing.');
-  await points.first().hover();
+  await points.last().hover();
   await page.locator('#chartTooltip').waitFor({ state: 'visible' });
   await shot('05-forecast');
 
