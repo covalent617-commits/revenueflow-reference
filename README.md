@@ -39,7 +39,7 @@ The navigation includes role-aware Dashboard, CFO Dashboard, Executive Business 
 
 The prototype includes interactive navigation, role preview, organisation switching, search, record details, basic create flows, Leak Radar tab switching, analytics reports, simulator controls, saved demo scenarios, email draft/preview/confirmation, portal-link preview and AI assistant interactions.
 
-All business data is illustrative. Changes are local to the browser session. No production database, payment rail, email provider, calendar, e-signature provider, file storage, authentication service, AI model, or organisation permission service is connected. Controls that imply external execution are preview flows and do not perform external actions.
+Each workspace shows a status legend distinguishing Core V1 (verify against the active application), Planned V2.0 (approved direction) and Later-stage preview (validation required). All business data is illustrative. Changes are local to the browser session. No production database, payment rail, email provider, calendar, e-signature provider, file storage, authentication service, AI model, or organisation permission service is connected. Controls that imply external execution are preview flows and do not perform external actions.
 
 The reference distinguishes the complete product vision from production implementation. Backend enforcement, tenant isolation, provider integrations, auditability, data retention, document security, legal validation and operational reliability remain implementation requirements.
 
