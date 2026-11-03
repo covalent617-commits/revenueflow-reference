@@ -30,7 +30,7 @@ jobs:
           node <<'NODE'
           const fs = require('fs');
           const html = fs.readFileSync('index.html', 'utf8');
-          const navPages = [...html.matchAll(/class="navbtn"[^>]*data-page="([^"]+)"/g)].map(x => x[1]);
+          const navPages = [...html.matchAll(/class="navbtn(?: active)?"[^>]*data-page="([^"]+)"/g)].map(x => x[1]);
           const mapStart = html.indexOf('let fn={');
           const mapEnd = html.indexOf("};$('#content')", mapStart);
           if (mapStart < 0 || mapEnd < 0) throw new Error('Workspace route map not found');
