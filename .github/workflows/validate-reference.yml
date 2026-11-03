@@ -35,7 +35,7 @@ jobs:
           const mapEnd = html.indexOf("};$('#content')", mapStart);
           if (mapStart < 0 || mapEnd < 0) throw new Error('Workspace route map not found');
           const routeText = html.slice(mapStart + 'let fn={'.length, mapEnd);
-          const routes = new Set([...routeText.matchAll(/(?:^|,)\s*([A-Za-z][A-Za-z0-9_]*)\s*(?=:|,|})/g)].map(x => x[1]));
+          const routes = new Set([...routeText.matchAll(/(?:^|,)\s*([A-Za-z][A-Za-z0-9_]*)\s*(?=:|,|$)/g)].map(x => x[1]));
           const missing = [...new Set(navPages)].filter(x => !routes.has(x));
           if (missing.length) throw new Error('Navigation routes without render handlers: ' + missing.join(', '));
           const required = [
