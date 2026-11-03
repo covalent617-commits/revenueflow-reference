@@ -3,7 +3,8 @@
 **Refinement branch:** `refinement-identity-roles-charts`  
 **Base:** `main`  
 **Scope:** Existing V2.0 reference project only. The active RevenueFlow application and the active V1/Cline programme were not modified.  
-**Automated validation:** Passed — [GitHub Actions run 41679484324](https://github.com/covalent617-commits/revenueflow-reference/actions/runs/41679484324).
+**Source validation:** Passed — [GitHub Actions run 41679820532](https://github.com/covalent617-commits/revenueflow-reference/actions/runs/41679820532).  
+**Browser smoke and screenshots:** Passed — [GitHub Actions run 41680693852](https://github.com/covalent617-commits/revenueflow-reference/actions/runs/41680693852).
 
 ## 1. Summary
 
@@ -55,7 +56,7 @@ Lead Intelligence and Competitor Intelligence remain specialised Sales Intellige
 - Receivables ageing uses a semantic progression from teal/blue through amber/orange to coral.
 - Project profitability and customer financial-health indicators use distinct positive/warning/negative colours.
 
-The line chart helper formats monetary values using the active organisation currency setting. The reference includes GBP, NGN, USD and EUR display choices. It does not perform foreign-exchange conversion.
+The line chart helper formats monetary values using the active organisation currency setting and matching locale. The reference includes GBP, NGN, USD and EUR display choices; the browser test verified the Nigerian naira symbol for NGN. It does not perform foreign-exchange conversion.
 
 ## 3. Organisation, user and membership model
 
@@ -184,9 +185,9 @@ The table distinguishes implementation in the reference from independent browser
 
 | Workspace / screen | Reference status | What was checked |
 |---|---|---|
-| Dashboard | Implemented | Role defaults, KPI links, draggable widgets, route mapping and JavaScript syntax |
+| Dashboard | Browser-tested | Role defaults, KPI links, drag-and-drop reorder, route mapping and runtime-error check |
 | Attention Queue | Implemented | Separate actionable queue purpose and navigation route |
-| CFO Dashboard | Implemented | No preview gate; finance overview, definitions, charts, drilldown routes and simulator shortcut |
+| CFO Dashboard | Browser-tested | Accessible as Member demo persona; finance overview, definitions, charts, drilldown routes and simulator shortcut |
 | Executive Business Command Centre | Preview implemented | Executive dimensions and navigation links |
 | Leads | Existing preview retained | Route mapping and source presence |
 | Opportunities | Existing preview retained | Pipeline table and route mapping |
@@ -195,9 +196,9 @@ The table distinguishes implementation in the reference from independent browser
 | Products & Services | Existing preview retained | Catalogue workspace route |
 | Contracts | Existing preview retained | Contract workspace route |
 | Approval Centre | Existing preview retained | Approval queue and review-preview flow |
-| Leak Radar | Implemented/refined | Three exact primary tabs, severity ring, evidence lists and route mapping |
-| Forecast | Implemented/refined | Separate screen, three distinct series, target, funnel and composition |
-| Analytics | Implemented/refined | Separate report library, report visual types and simulator tab |
+| Leak Radar | Browser-tested | Exactly three primary tabs, severity ring, evidence lists and route mapping |
+| Forecast | Browser-tested | Separate screen, three distinct series, target, funnel, composition and hover tooltip |
+| Analytics | Browser-tested | Separate report library, report visual types and simulator tab; no embedded Forecast tab |
 | Projects & Delivery | Existing preview retained | Route mapping and project table |
 | Resource Capacity | Existing preview retained | Route mapping and capacity table |
 | Customer Success & Renewals | Existing preview retained | Route mapping and health/renewal table |
@@ -217,19 +218,19 @@ The table distinguishes implementation in the reference from independent browser
 | Integrations & API | Existing preview retained | Provider/sync workspace source |
 | Team Performance | Added/refined | Workload, capacity and outcomes separated from role administration |
 | Activity & Audit | Existing preview retained | Chronological event workspace source |
-| Settings | Implemented/refined | Identity model, member invitations, role assignment, custom roles, scopes and security sections |
+| Settings | Browser-tested | Identity model, invitation creation, membership-role assignment, custom roles, scopes and security sections |
 | Notifications | Existing preview retained | Personal alert purpose and route mapping |
 
 ### Automated checks passed
 
-GitHub Actions run 41679484324 passed:
+GitHub Actions source validation run 41679820532 passed:
 - Inline JavaScript syntax check.
 - Navigation-to-render-route coverage.
 - Required visual/product invariant checks.
 - CFO preview gate absence.
 - Leak Radar primary-tab invariant.
 
-The validation run is source-level automation. It does not simulate a real browser.
+The separate Chromium browser run 41680693852 also passed. It exercised navigation, CFO access under a Member persona, Leak Radar tabs/ring, Analytics tab count, Forecast point hover/tooltips, Settings invitation and role assignment, NGN currency formatting, Dashboard drag-and-drop, mobile Dashboard rendering and browser runtime-error checks.
 
 ## 9. Remaining limitations and differences from production
 
@@ -240,12 +241,12 @@ The following are not claimed as production functionality:
 3. Settings invitation, role assignment and custom-role flows update local reference-session state only.
 4. Workspace switching demonstrates membership context but is not a security test; all business records remain illustrative sample data.
 5. CFO KPI drilldowns currently navigate to related workspaces, not to fully reconciled invoice/payment/project source records.
-6. Charts and drag/drop were syntax- and source-validated, but not independently exercised in a real browser automation session.
+6. The automated Chromium run exercised chart hover tooltips and dashboard drag-and-drop. Broader cross-browser and manual exploratory testing remains outstanding.
 7. Mobile layouts are responsive CSS previews; device/browser testing remains outstanding.
 8. The Revenue Recovery Simulator is illustrative and does not write to business records.
 9. Email, calendars, payments, e-signatures, OCR, uploads, integrations and AI actions are previews; no provider is connected.
 10. Full typography-scale, contrast and assistive-technology audit remains outstanding. Contrast on key muted labels and chart axes was strengthened, but a complete accessibility audit is not claimed.
-11. No independent screenshots were captured during this source-level review. The published site can be opened for visual inspection; screenshots should be captured from a real browser session rather than fabricated.
+11. Nine real browser screenshots were captured and uploaded as the `revenueflow-reference-screenshots` artifact in [run 41680693852](https://github.com/covalent617-commits/revenueflow-reference/actions/runs/41680693852): Dashboard, CFO Dashboard, Leak Radar, Analytics, Forecast, Settings memberships, CFO with NGN, reordered Dashboard and mobile Dashboard. The artifact expires after 14 days.
 
 ## 10. Files changed in this refinement
 
@@ -253,4 +254,5 @@ The following are not claimed as production functionality:
 - `README.md` — updated navigation, role model, visual identity and prototype limitations.
 - `docs/V2.0-REFERENCE-BLUEPRINT.md` — corrected navigation and identity architecture, added visual and chart standards.
 - `.github/workflows/validate-reference.yml` — automated syntax, navigation and product-invariant validation.
+- `.github/workflows/reference-browser-smoke.yml` and `scripts/capture-reference-screenshots.cjs` — Chromium journey checks and screenshot artifact generation.
 
