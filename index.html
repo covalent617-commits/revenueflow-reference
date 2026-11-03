@@ -69,7 +69,7 @@ const opps=[
 {name:'Annual Renewal',customer:'BrightEdge Financial',value:150000,stage:'Negotiation',prob:75,score:87,signal:'Renewal sponsor has not confirmed plan',owner:'Emma Wilson',close:'08 Jan 2027',last:'4 days ago',status:'Open'},
 {name:'Creative Retainer',customer:'Northstar Creative',value:95000,stage:'Prospecting',prob:15,score:24,signal:'No material risk signal',owner:'James Carter',close:'15 Dec 2026',last:'Today',status:'Open'}
 ];
-const money=n=>new Intl.NumberFormat('en-GB',{style:'currency',currency:currencyCode,maximumFractionDigits:0}).format(Number(n)||0);
+const money=n=>new Intl.NumberFormat(({GBP:'en-GB',NGN:'en-NG',USD:'en-US',EUR:'en-IE'})[currencyCode]||'en-GB',{style:'currency',currency:currencyCode,maximumFractionDigits:0}).format(Number(n)||0);
 const badge=(s)=>'<span class="status '+(s==='Critical'?'critical':s==='High'?'high':s==='Medium'?'medium':s==='Healthy'||s==='Paid'||s==='Won'||s==='Resolved'?'low':s==='At risk'?'high':'info')+'">'+s+'</span>';
 const kpi=(label,value,delta='',tone='',page='')=>'<section class="card kpi '+(tone==='good'?'tone-good':tone==='bad'?'tone-bad':tone==='info'?'tone-info':tone==='warn'?'tone-warn':tone==='purple'?'tone-purple':'')+'" '+(page?'role="link" tabindex="0" data-page="'+page+'"':'')+'><div class="klabel">'+label+'</div><div class="kvalue">'+value+'</div><div class="kdelta '+tone+'">'+delta+'</div></section>';
 const table=(heads,rows)=>'<div class="card tablewrap"><table><thead><tr>'+heads.map(x=>'<th>'+x+'</th>').join('')+'</tr></thead><tbody>'+rows.map((r,i)=>'<tr class="clickrow" data-row="'+i+'">'+r.map(x=>'<td>'+x+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';
