@@ -3,8 +3,8 @@
 **Refinement branch:** `refinement-identity-roles-charts`  
 **Base:** `main`  
 **Scope:** Existing V2.0 reference project only. The active RevenueFlow application and the active V1/Cline programme were not modified.  
-**Source validation:** Passed — [GitHub Actions run 41679820532](https://github.com/covalent617-commits/revenueflow-reference/actions/runs/41679820532).  
-**Browser smoke and screenshots:** Passed — [GitHub Actions run 41680693852](https://github.com/covalent617-commits/revenueflow-reference/actions/runs/41680693852).
+**Source validation:** Passed — [GitHub Actions run 41681141950](https://github.com/covalent617-commits/revenueflow-reference/actions/runs/41681141950).  
+**Browser smoke and screenshots:** Passed — [GitHub Actions run 41681142200](https://github.com/covalent617-commits/revenueflow-reference/actions/runs/41681142200).
 
 ## 1. Summary
 
@@ -246,7 +246,7 @@ The following are not claimed as production functionality:
 8. The Revenue Recovery Simulator is illustrative and does not write to business records.
 9. Email, calendars, payments, e-signatures, OCR, uploads, integrations and AI actions are previews; no provider is connected.
 10. Full typography-scale, contrast and assistive-technology audit remains outstanding. Contrast on key muted labels and chart axes was strengthened, but a complete accessibility audit is not claimed.
-11. Nine real browser screenshots were captured and uploaded as the `revenueflow-reference-screenshots` artifact in [run 41680693852](https://github.com/covalent617-commits/revenueflow-reference/actions/runs/41680693852): Dashboard, CFO Dashboard, Leak Radar, Analytics, Forecast, Settings memberships, CFO with NGN, reordered Dashboard and mobile Dashboard. The artifact expires after 14 days.
+11. Nine real browser screenshots were captured and uploaded as the `revenueflow-reference-screenshots` artifact in [run 41681142200](https://github.com/covalent617-commits/revenueflow-reference/actions/runs/41681142200): Dashboard, CFO Dashboard, Leak Radar, Analytics, Forecast, Settings memberships, CFO with NGN, reordered Dashboard and mobile Dashboard. The artifact expires after 14 days.
 
 ## 10. Files changed in this refinement
 
@@ -254,5 +254,6 @@ The following are not claimed as production functionality:
 - `README.md` — updated navigation, role model, visual identity and prototype limitations.
 - `docs/V2.0-REFERENCE-BLUEPRINT.md` — corrected navigation and identity architecture, added visual and chart standards.
 - `.github/workflows/validate-reference.yml` — automated syntax, navigation and product-invariant validation.
+- `.github/workflows/reference-browser-smoke.yml` and `scripts/capture-reference-screenshots.cjs` — Chromium journey checks and screenshot artifact generation.
 - `.github/workflows/reference-browser-smoke.yml` and `scripts/capture-reference-screenshots.cjs` — Chromium journey checks and screenshot artifact generation.
 
