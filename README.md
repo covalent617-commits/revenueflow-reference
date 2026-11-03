@@ -6,7 +6,7 @@ This repository contains the complete V2.0 product reference experience and mast
 
 Published reference site: https://covalent617-commits.github.io/revenueflow-reference/
 
-This additive refinement is being prepared on **`refinement-identity-roles-charts`**. The active V1 application repository and its Cline refinement programme are separate and are not modified by this work.
+This additive refinement was merged into `main` on 3 November 2026 through [PR #2](https://github.com/covalent617-commits/revenueflow-reference/pull/2), with browser verification and screenshot automation merged through [PR #3](https://github.com/covalent617-commits/revenueflow-reference/pull/3). The active V1 application repository and its Cline refinement programme are separate and were not modified.
 
 ## Product coverage
 
@@ -72,7 +72,7 @@ Charts use differentiated series, visible points, date labels, units, legends, h
 
 Implemented reference interactions include navigation, demo persona preview, organisation switching, Settings membership/invitation/role assignment demonstrations, custom role creation preview, search, record details, basic create flows, Leak Radar tab switching, analytics reports, chart tooltips, forecast view, draggable dashboard widgets, simulator controls, saved demo scenarios, email draft/preview/confirmation, portal-link preview and AI assistant interactions.
 
-**Browser verification and screenshots:** Chromium smoke tests passed for the core journeys. The run captured nine screenshots (Dashboard, CFO, Leak Radar, Analytics, Forecast, Settings, NGN CFO, reordered Dashboard and mobile Dashboard). [Open the browser test run and download its screenshot artifact](https://github.com/covalent617-commits/revenueflow-reference/actions/runs/41680693852). The artifact is retained for 14 days.
+**Browser verification and screenshots:** Chromium smoke tests passed for the core journeys. The run captured nine screenshots (Dashboard, CFO, Leak Radar, Analytics, Forecast, Settings, NGN CFO, reordered Dashboard and mobile Dashboard). [Open the latest main-branch browser run and download its screenshot artifact](https://github.com/covalent617-commits/revenueflow-reference/actions/runs/41681142200). The artifact is retained for 14 days.
 
 All business data is illustrative. Local demo changes are held in the browser session only. No production database, payment rail, email provider, calendar, e-signature provider, file storage, authentication service, AI model, or organisation permission service is connected. Provider actions are previews and do not perform external actions.
 
