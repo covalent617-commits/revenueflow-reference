@@ -22,6 +22,7 @@ const fs = require('fs');
   if (!(await page.locator('#roleLabel').innerText()).includes('Owner')) throw new Error('Signed-in profile must show the assigned read-only membership role.');
 
   await page.locator('#orgSwitch').click();
+  await page.locator('#workspaceMenu').waitFor({ state: 'visible' });
   if (await page.locator('#workspaceOptions [data-workspace-index]').count() !== 3) throw new Error('Workspace switcher must list only the three authorised demo memberships.');
   const workspaceMenu = await page.locator('#workspaceMenu').innerText();
   if (!workspaceMenu.includes('Nigerian Breweries') || !workspaceMenu.includes('Finance Manager') || !workspaceMenu.includes('Company C') || !workspaceMenu.includes('Sales Representative')) throw new Error('Workspace menu must show organisation and assigned role as read-only context.');
