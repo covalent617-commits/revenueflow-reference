@@ -42,11 +42,14 @@ jobs:
             'function riskDistribution()', 'function forecast()', 'function attention()',
             'function teamWorkspace()', 'function settings()', 'data-chart-point="true"',
             'function bindDashboardDnD()', 'The organisation itself never has an employee role',
-            'Demo persona · preview only', 'Sales Intelligence', 'Customer Intelligence',
+            'Your Workspaces', 'workspaceRecordSets', 'reportGroupedBars', 'Sales Intelligence', 'Customer Intelligence',
             'Process Intelligence', 'Revenue Recovery Simulator'
           ];
           const absent = required.filter(x => !html.includes(x));
           if (absent.length) throw new Error('Missing approved reference requirements: ' + absent.join(', '));
+          if (html.includes('id="roleSelect"') || html.includes('class="persona-wrap"')) throw new Error('Self-service role selection must not exist in the dashboard or profile.');
+          if (!html.includes('aria-label="Signed-in user and assigned workspace role"')) throw new Error('Read-only assigned role must be visible in the signed-in profile.');
+          if (!html.includes('data-report-visual="grouped-bars"')) throw new Error('Categorical Won/Lost comparison must use grouped bars.');
           if (html.includes("function cfo(){if(")) throw new Error('CFO reference preview must remain fully accessible');
           if (html.includes("['Sales Intelligence','Customer Intelligence','Process Intelligence','")) throw new Error('Unexpected fourth Leak Radar primary tab');
           console.log('Reference navigation and approved product invariants passed.');
