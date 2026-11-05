@@ -18,8 +18,36 @@ const fs = require('fs');
   await page.goto(base, { waitUntil: 'networkidle' });
   await page.locator('#content h1').waitFor();
   await shot('01-dashboard');
+  if (await page.locator('#roleSelect, .persona-wrap, .rolepick').count()) throw new Error('Self-service role selector must be removed from the interface.');
+  if (!(await page.locator('#roleLabel').innerText()).includes('Owner')) throw new Error('Signed-in profile must show the assigned read-only membership role.');
 
-  await page.selectOption('#roleSelect', 'Member');
+  await page.locator('#orgSwitch').click();
+  await page.locator('#workspaceMenu').waitFor({ state: 'visible' });
+  if (await page.locator('#workspaceOptions [data-workspace-index]').count() !== 3) throw new Error('Workspace switcher must list only the three authorised demo memberships.');
+  const workspaceMenu = await page.locator('#workspaceMenu').innerText();
+  if (!workspaceMenu.includes('Nigerian Breweries') || !workspaceMenu.includes('Finance Manager') || !workspaceMenu.includes('Company C') || !workspaceMenu.includes('Sales Representative')) throw new Error('Workspace menu must show organisation and assigned role as read-only context.');
+  await page.locator('[data-workspace-index="1"]').click();
+  if (!(await page.locator('#roleLabel').innerText()).includes('Finance Manager')) throw new Error('Workspace switch did not load Sarah’s Finance Manager membership.');
+  await go('customers');
+  const nbCustomers = await page.locator('#content').innerText();
+  if (!nbCustomers.includes('Nigerian Breweries Distribution') || nbCustomers.includes('Global Tech Solutions')) throw new Error('Customer records were not scoped to Nigerian Breweries.');
+  await page.locator('#assistantInput').fill('Which deals need attention today?');
+  await page.locator('#assistantInput').press('Enter');
+  const nbAi = await page.locator('#assistantBody').innerText();
+  if (!nbAi.includes('Nigerian Breweries') || !nbAi.includes('National Distribution Renewal') || nbAi.includes('Cloud Migration')) throw new Error('AI assistant did not use the active workspace opportunity context.');
+  await go('settings');
+  if (await page.locator('[data-action="invite-member"], [data-action="assign-role"]').count()) throw new Error('Finance Manager must not see owner/admin membership administration actions.');
+  await page.locator('#orgSwitch').click();
+  await page.locator('[data-workspace-index="2"]').click();
+  if (!(await page.locator('#roleLabel').innerText()).includes('Sales Representative')) throw new Error('Company C membership role did not load independently.');
+  await go('customers');
+  const companyCCustomers = await page.locator('#content').innerText();
+  if (!companyCCustomers.includes('Company C Enterprise') || companyCCustomers.includes('Nigerian Breweries Distribution')) throw new Error('Customer records leaked between Company C and Nigerian Breweries.');
+  await page.locator('#orgSwitch').click();
+  await page.locator('[data-workspace-index="0"]').click();
+  if (!(await page.locator('#roleLabel').innerText()).includes('Owner')) throw new Error('Returning to Northstar did not restore Sarah’s Owner membership.');
+
+  
   await go('cfo');
   if (!(await page.locator('#content h1').innerText()).includes('CFO Dashboard')) throw new Error('CFO preview was not accessible for the Member demo persona.');
   if (await page.locator('#content').innerText().then(t => t.includes('Access required'))) throw new Error('CFO preview showed an artificial restriction.');
@@ -44,9 +72,9 @@ const fs = require('fs');
       await shot('04a-analytics-revenue-intelligence');
     }
     if (reportIndex === 2) {
-      if (!(await page.locator('#modal [data-report-visual="donut"]').count())) throw new Error('Win/Loss must use a distinct outcome distribution visual.');
-      const donut = await page.locator('#modal .donut').getAttribute('aria-label');
-      if (!donut.includes('Won') || !donut.includes('Lost')) throw new Error('Won and Lost labels are missing from the outcome visual.');
+      if (!(await page.locator('#modal [data-report-visual="grouped-bars"]').count())) throw new Error('Win/Loss category comparison must use grouped bars.');
+      const grouped = await page.locator('#modal .grouped-bars').innerText();
+      if (!grouped.includes('Won') || !grouped.includes('Lost')) throw new Error('Won and Lost series are missing from the grouped bar visual.');
       await shot('04b-analytics-win-loss');
     }
     if (reportIndex === 8) {
@@ -64,6 +92,9 @@ const fs = require('fs');
     await page.locator('#modal [data-action="close-modal"]').click();
   }
 
+  await go('dashboard');
+  if (!(await page.locator('[data-widget="pipeline"] [data-report-visual="bars"]').count())) throw new Error('Dashboard pipeline stage comparison must use categorical bars.');
+
   await go('forecast');
   const points = page.locator('[data-chart-point]');
   if (await points.count() < 8) throw new Error('Forecast chart data points are missing.');
@@ -71,7 +102,6 @@ const fs = require('fs');
   await page.locator('#chartTooltip').waitFor({ state: 'visible' });
   await shot('05-forecast');
 
-  await page.selectOption('#roleSelect', 'Owner');
   await go('settings');
   if (!(await page.locator('#content').innerText()).includes('The organisation itself never has an employee role')) throw new Error('Settings identity model explanation is missing.');
   await page.locator('[data-action="invite-member"]').click();

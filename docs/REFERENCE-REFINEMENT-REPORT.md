@@ -278,3 +278,38 @@ This follow-up preserves the restored RevenueFlow palette, Leak Radar severity r
 - Chromium browser smoke: passed in [GitHub Actions run 41706703491](https://github.com/covalent617-commits/revenueflow-reference/actions/runs/41706703491). The run opened all 12 report details, verified their report-specific visualisations, checked 24 points across the three-series Revenue Intelligence and Forecast Analysis charts, checked Won/Lost labels, verified NGN chart currency and retained the earlier CFO, Leak Radar, Settings, dashboard and mobile journeys.
 - Updated screenshots were captured and uploaded in the `revenueflow-reference-screenshots` artifact for run 41706703491. New views include the Analytics library, Revenue Intelligence, Win/Loss, Forecast Analysis and NGN Analytics, alongside the CFO, Leak Radar, Forecast, Settings, dashboard and mobile views.
 - No production services, financial records, email/calendar providers or external integrations are connected by these reference-only visuals.
+
+
+## 12. Additive membership, workspace-switching and chart-type correction
+
+**Branch:** `refinement-membership-workspace-chart-types`  
+**Scope:** Reference site only. The live RevenueFlow application and the active V1/Cline programme were not changed.
+
+### Membership and profile
+
+- Removed the dashboard demo-persona selector and all self-service role-switching controls from the top navigation.
+- The signed-in profile now displays Sarah Mitchell and her assigned role in the active organisation as read-only information.
+- The workspace switcher lists the three illustrative memberships and shows each assigned role as read-only context: Northstar Agency Group — Owner; Nigerian Breweries — Finance Manager; Company C — Sales Representative.
+- Selecting a workspace changes the active organisation and loads its corresponding membership role. It does not allow a user to choose a role or elevate permissions.
+- Settings remains the administrative location for invitations, role assignment, custom roles and permission scopes. Invitation and role-assignment actions are hidden for the Finance Manager and Sales Representative memberships in the demo.
+
+### Workspace-scoped demo context
+
+- Added separate illustrative customer and opportunity datasets for Northstar Agency Group, Nigerian Breweries and Company C.
+- The customer and opportunity workspaces and the AI assistant's opportunity/receivables responses now read from the active organisation's demo dataset.
+- Browser verification checks that Nigerian Breweries records do not appear in Company C and vice versa, and that the AI assistant uses the active workspace's opportunity context.
+- **Prototype limitation:** this is local demo-state separation for customer/opportunity examples, not a production tenant-security test. Other finance summaries, static sample charts, integrations and backend records are not connected to isolated tenant storage. Production tenant isolation and permission enforcement remain server-side requirements.
+
+### Chart selection correction
+
+- Dashboard pipeline-by-stage now uses categorical horizontal bars with stage counts, not percentage-like progression lines.
+- Win/Loss Analytics now uses grouped monthly bars, with separate Won (teal) and Lost (coral) series, category labels, exact values and hover/focus tooltips.
+- Revenue by month and actual/weighted forecast/target remain line charts because they show values over continuous time.
+- Pipeline stage, risk severity, quote status, team workload, competitor mentions and intervention states remain category-count bars; expense/customer composition can use labelled donut distributions; Leak Radar retains its severity ring.
+- No global chart-type substitution was introduced. The restored palette and exact three Leak Radar primary tabs are preserved.
+
+### Verification status
+
+The updated Chromium smoke test is intended to verify: no role selector in the UI; read-only role labels; all three workspace memberships and assigned roles; workspace-specific customer/opportunity data; AI context; restricted membership administration for non-owner roles; grouped Won/Lost bars; categorical dashboard pipeline bars; line charts for revenue/forecast trends; and the existing CFO, Leak Radar, Settings, currency, drag-and-drop and mobile journeys.
+
+The browser test must pass in CI before this refinement is considered verified. This report does not claim live authentication, invitation email delivery, invitee acceptance, backend authorisation, production data isolation or real source-record drilldowns.
