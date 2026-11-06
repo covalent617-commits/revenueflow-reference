@@ -49,14 +49,53 @@ button:active,.navbtn:active,.tab:active{transform:translateY(1px);filter:bright
 button:disabled,input:disabled,select:disabled,textarea:disabled{opacity:.45;cursor:not-allowed;filter:saturate(.5);box-shadow:none}
 .navbtn.active,.tab.active,.workspace-option[aria-current=true]{box-shadow:inset 0 0 0 1px #d49c3c,0 0 15px #f2b54418}
 @media(max-width:760px){.sidebar-toggle{display:none}.app,.app.sidebar-collapsed{grid-template-columns:1fr}.fullscreen-toggle{font-size:16px!important}.workspace-create{margin-top:8px}}
+
+/* Precise workspace selector and non-overlapping sidebar layout */
+.app{grid-template-columns:246px minmax(0,1fr);min-width:0;align-items:stretch}
+.sidebar{height:100vh;min-height:0;position:sticky;top:0;overflow:hidden;display:grid;grid-template-rows:66px auto 46px minmax(0,1fr) auto;min-width:0;z-index:8}
+.brand{min-width:0}
+.orgswitch{box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:10px;min-width:0;min-height:66px;margin:12px 11px 7px;padding:11px 12px;border:1px solid var(--line);border-radius:11px;background:#0d2034;text-align:left;width:calc(100% - 22px);cursor:pointer}
+.orgswitch-main{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+.orgswitch-icon{width:31px;height:31px;flex:0 0 31px;display:grid;place-items:center;border:1px solid #45617d;border-radius:9px;background:#17314b;color:var(--amber);font-size:17px}
+.orgswitch-copy{display:block;min-width:0;overflow:hidden}
+.orgswitch-copy strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;line-height:1.4;color:var(--text)}
+.orgswitch-copy small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font-size:9px;line-height:1.4;margin-top:4px}
+.orgswitch-arrow{width:27px;height:27px;flex:0 0 27px;display:grid;place-items:center;border:1px solid #3c5873;border-radius:50%;background:#142c44;color:#d8e5f2;font-size:19px;line-height:1;transition:transform .18s,background .18s,border-color .18s}
+.orgswitch[aria-expanded=true] .orgswitch-arrow{transform:rotate(180deg);background:#203e5b;border-color:#b38431}
+.orgswitch:hover .orgswitch-arrow{border-color:var(--amber);background:#203e5b}
+.sidebar-control-slot{height:46px;min-height:46px;display:flex;align-items:center;justify-content:flex-end;padding:0 13px 0 8px;border-bottom:1px solid #1c344b}
+.sidebar-toggle{position:static;z-index:2;width:36px;height:34px;flex:0 0 36px;display:grid;place-items:center;border:1px solid #49647f;border-radius:9px;background:#142b43;color:#f2c15b;font-size:25px;line-height:1;box-shadow:0 3px 12px #0004;cursor:pointer;transition:background .16s,box-shadow .16s,transform .22s}
+.sidebar-toggle:hover{background:#203e5d;box-shadow:0 0 0 3px #4bc9e822,0 5px 15px #0005}
+#nav{min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-gutter:stable;scrollbar-width:thin;scrollbar-color:#35516d #091827;padding-bottom:10px}
+#nav::-webkit-scrollbar{width:7px}#nav::-webkit-scrollbar-track{background:#091827}#nav::-webkit-scrollbar-thumb{background:#35516d;border-radius:8px;border:1px solid #091827}
+.sidefoot{min-width:0;margin-top:0}
+.main{position:relative;display:flex;flex-direction:column;min-width:0;max-width:100%;overflow-x:clip}
+.topbar{position:sticky;top:0;flex:0 0 66px;width:100%;min-width:0;box-sizing:border-box}
+.content{box-sizing:border-box;width:100%;min-width:0;max-width:1720px;padding:24px clamp(14px,2vw,25px) 60px}
+.workspace-menu{position:absolute;top:76px;left:16px;right:auto;width:min(360px,calc(100% - 32px));max-width:calc(100% - 32px);box-sizing:border-box}
+.app.sidebar-collapsed{grid-template-columns:64px minmax(0,1fr)}
+.app.sidebar-collapsed .sidebar{grid-template-rows:66px auto 46px minmax(0,1fr) auto}
+.app.sidebar-collapsed .brand{padding:0;justify-content:center}.app.sidebar-collapsed .brand>span:last-child,.app.sidebar-collapsed .navlabel{display:none}
+.app.sidebar-collapsed .orgswitch{width:46px;min-height:46px;height:46px;margin:8px auto;padding:5px;justify-content:center;border-radius:10px}
+.app.sidebar-collapsed .orgswitch-copy,.app.sidebar-collapsed .orgswitch-arrow{display:none}
+.app.sidebar-collapsed .orgswitch-icon{width:28px;height:28px;flex-basis:28px}
+.app.sidebar-collapsed .sidebar-control-slot{justify-content:center;padding:0 5px}
+.app.sidebar-collapsed .sidebar-toggle{transform:rotate(180deg)}
+.app.sidebar-collapsed #nav .navgroup{padding:9px 8px 2px}
+.app.sidebar-collapsed #nav .navbtn{width:42px;height:42px;padding:0;justify-content:center;font-size:0;gap:0}
+.app.sidebar-collapsed #nav .navico{width:auto;font-size:17px}
+.app.sidebar-collapsed .sidefoot{display:none}
+.workspace-option{min-width:0}.workspace-option>span:nth-child(2){min-width:0;flex:1;text-align:left;overflow:hidden}
+@media(max-width:760px){.app,.app.sidebar-collapsed{grid-template-columns:minmax(0,1fr)}.sidebar{display:none}.workspace-menu{position:fixed;top:66px;left:12px;right:12px;width:auto;max-width:none}.topbar{padding:0 12px;gap:8px}.content{padding:18px 12px 48px}}
+@media(min-width:761px) and (max-width:1050px){.app{grid-template-columns:220px minmax(0,1fr)}.app.sidebar-collapsed{grid-template-columns:64px minmax(0,1fr)}.orgswitch{margin-left:8px;margin-right:8px;width:calc(100% - 16px);padding:9px}.orgswitch-copy strong{font-size:10px}}
 </style>
 </head>
 <body>
 <div class="app">
 <aside class="sidebar">
-<button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Collapse navigation" title="Collapse navigation">‹</button>
 <div class="brand"><span class="brandmark">⌁</span><span>RevenueFlow<small>CONNECTED REVENUE OPERATIONS</small></span></div>
-<button class="orgswitch" id="orgSwitch" aria-haspopup="true" aria-expanded="false"><strong>◈  Northstar Agency Group　↓</strong><small>Active workspace · Sarah is Owner</small></button>
+<button class="orgswitch" id="orgSwitch" aria-haspopup="true" aria-expanded="false"><span class="orgswitch-main"><span class="orgswitch-icon" aria-hidden="true">◈</span><span class="orgswitch-copy"><strong>Northstar Agency Group</strong><small>Active workspace · Sarah is Owner</small></span></span><span class="orgswitch-arrow" aria-hidden="true"><span>⌄</span></span></button>
+<div class="sidebar-control-slot"><button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Collapse navigation" title="Collapse navigation">‹</button></div>
 <nav id="nav">
 <div class="navgroup"><div class="navlabel">Home</div><button class="navbtn active" data-page="dashboard"><span class="navico">⌂</span>Dashboard</button><button class="navbtn" data-page="attention"><span class="navico">⚑</span>Attention Queue</button><button class="navbtn" data-page="cfo"><span class="navico">▥</span>CFO Dashboard</button><button class="navbtn" data-page="executive"><span class="navico">⌘</span>Executive Command Centre</button></div>
 <div class="navgroup"><div class="navlabel">CRM · Commercial</div><button class="navbtn" data-page="leads"><span class="navico">◎</span>Leads</button><button class="navbtn" data-page="opportunities"><span class="navico">◈</span>Opportunities</button><button class="navbtn" data-page="customers"><span class="navico">♙</span>Customers & Contacts</button><button class="navbtn" data-page="quotes"><span class="navico">▤</span>Quotes & Proposals</button><button class="navbtn" data-page="catalogue"><span class="navico">▧</span>Products & Services</button><button class="navbtn" data-page="contracts"><span class="navico">▤</span>Contracts</button><button class="navbtn" data-page="approvals"><span class="navico">✓</span>Approval Centre</button></div>
@@ -327,14 +366,14 @@ document.addEventListener('pointermove',e=>{const t=$('#chartTooltip');if(t&&t.s
 document.addEventListener('pointerout',e=>{if(e.target.closest('[data-chart-point]'))$('#chartTooltip').style.display='none';});
 $('#globalSearch').addEventListener('keydown',e=>{if(e.key!=='Enter')return;let q=e.target.value.toLowerCase(),o=opps.find(x=>x.name.toLowerCase().includes(q)||x.customer.toLowerCase().includes(q)),c=customers.find(x=>x.name.toLowerCase().includes(q)||x.contact.toLowerCase().includes(q));if(o)oppDetail(o);else if(c){render('customers');openModal(customerDetail(c))}else toast('No matching illustrative record found.')});
 document.addEventListener('change',e=>{if(e.target.id==='currencySetting'){currencyCode=e.target.value;render(current);toast('Currency display changed in the reference preview.');}});
-function renderWorkspaceMenu(){const root=$('#workspaceOptions');root.innerHTML=orgs.map((org,i)=>'<button class="workspace-option" role="menuitem" data-workspace-index="'+i+'" aria-current="'+(i===orgIndex)+'"><span class="orgmark">◈</span><span><strong>'+org+'</strong><small>Sarah Mitchell · membership role</small></span><span class="assigned-role">'+orgMembershipRoles[i]+'</span></button>').join('');$('#orgSwitch').innerHTML='<strong>◈  '+orgs[orgIndex]+'　↓</strong><small>Active workspace · Sarah is '+orgMembershipRoles[orgIndex]+'</small>';$('#orgSwitchMobile').textContent=orgs[orgIndex].split(' ')[0]+' ↓';$('#roleLabel').textContent=orgMembershipRoles[orgIndex]+' · '+orgs[orgIndex];}
+function renderWorkspaceMenu(){const root=$('#workspaceOptions');root.innerHTML=orgs.map((org,i)=>'<button class="workspace-option" role="menuitem" data-workspace-index="'+i+'" aria-current="'+(i===orgIndex)+'"><span class="orgmark">◈</span><span><strong>'+escapeHtml(org)+'</strong><small>Sarah Mitchell · assigned membership</small></span><span class="assigned-role">'+escapeHtml(orgMembershipRoles[i])+'</span></button>').join('');$('#orgSwitch').innerHTML='<span class="orgswitch-main"><span class="orgswitch-icon" aria-hidden="true">◈</span><span class="orgswitch-copy"><strong>'+escapeHtml(orgs[orgIndex])+'</strong><small>Active workspace · Sarah is '+escapeHtml(orgMembershipRoles[orgIndex])+'</small></span></span><span class="orgswitch-arrow" aria-hidden="true"><span>⌄</span></span>';$('#orgSwitchMobile').textContent=orgs[orgIndex].split(' ')[0]+' ↓';$('#roleLabel').textContent=orgMembershipRoles[orgIndex]+' · '+orgs[orgIndex];}
 function toggleWorkspaceMenu(force){const menu=$('#workspaceMenu'),open=typeof force==='boolean'?force:!menu.classList.contains('open');menu.classList.toggle('open',open);menu.style.display=open?'block':'none';$('#orgSwitch').setAttribute('aria-expanded',String(open));$('#orgSwitchMobile').setAttribute('aria-expanded',String(open));if(open)renderWorkspaceMenu();}
 function switchOrg(index){if(!Number.isInteger(index)||index<0||index>=orgs.length)return;orgIndex=index;activeRole=orgMembershipRoles[orgIndex];customers=workspaceRecordSets[index].customers;opps=workspaceRecordSets[index].opps;dashboardWidgetOrder=[...(dashboardDefaults[activeRole]||dashboardDefaults.Member)];toggleWorkspaceMenu(false);renderWorkspaceMenu();render(current);toast('Workspace changed to '+orgs[orgIndex]+'. Sarah’s assigned role is '+activeRole+'. No role was changed.');}
 $('#orgSwitch').addEventListener('click',()=>toggleWorkspaceMenu());$('#orgSwitchMobile').addEventListener('click',()=>toggleWorkspaceMenu());
 $('#workspaceOptions').addEventListener('click',e=>{const item=e.target.closest('[data-workspace-index]');if(item)switchOrg(Number(item.dataset.workspaceIndex));});
 document.addEventListener('click',e=>{if(!e.target.closest('#workspaceMenu')&&!e.target.closest('#orgSwitch')&&!e.target.closest('#orgSwitchMobile'))toggleWorkspaceMenu(false);});
 renderWorkspaceMenu();
-$('#sidebarToggle').addEventListener('click',()=>{sidebarCollapsed=!sidebarCollapsed;document.querySelector('.app').classList.toggle('sidebar-collapsed',sidebarCollapsed);$('#sidebarToggle').textContent=sidebarCollapsed?'›':'‹';$('#sidebarToggle').setAttribute('aria-label',sidebarCollapsed?'Expand navigation':'Collapse navigation');$('#sidebarToggle').title=sidebarCollapsed?'Expand navigation':'Collapse navigation';});
+$('#sidebarToggle').addEventListener('click',()=>{sidebarCollapsed=!sidebarCollapsed;document.querySelector('.app').classList.toggle('sidebar-collapsed',sidebarCollapsed);$('#sidebarToggle').textContent=sidebarCollapsed?'‹':'›';$('#sidebarToggle').setAttribute('aria-label',sidebarCollapsed?'Expand navigation':'Collapse navigation');$('#sidebarToggle').title=sidebarCollapsed?'Expand navigation':'Collapse navigation';});
 $('#fullscreenToggle').addEventListener('click',async()=>{try{if(!document.fullscreenElement){await document.documentElement.requestFullscreen();}else{await document.exitFullscreen();}}catch(e){toast('Full-screen mode is not available in this browser context.');}});
 document.addEventListener('fullscreenchange',()=>{const active=!!document.fullscreenElement;$('#fullscreenToggle').textContent=active?'⤢':'⛶';$('#fullscreenToggle').setAttribute('aria-label',active?'Restore normal view':'Enter full-screen workspace');$('#fullscreenToggle').title=active?'Restore normal view':'Enter full-screen workspace';});
 $('#backControl').addEventListener('click',()=>{if(current==='dashboard')return;const previous=routeHistory.pop()||'dashboard';suppressRouteHistory=true;render(previous);suppressRouteHistory=false;});
