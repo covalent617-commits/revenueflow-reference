@@ -134,7 +134,8 @@ const fs = require('fs');
   await page.locator('[data-widget="priority"]').dragTo(page.locator('[data-widget="pipeline"]'));
   let after = await page.locator('#dashboardWidgets [data-widget]').evaluateAll(nodes => nodes.map(n => n.dataset.widget).join(','));
   if (before === after) {
-    await page.locator('[data-widget="priority"] [data-action="widget-move-later"]').click();
+    await page.selectOption('#widgetOrderSelect', 'priority');
+    await page.locator('[data-action="widget-order-later"]').click();
     after = await page.locator('#dashboardWidgets [data-widget]').evaluateAll(nodes => nodes.map(n => n.dataset.widget).join(','));
   }
   if (before === after) throw new Error('Dashboard widget reordering did not change widget order.');
