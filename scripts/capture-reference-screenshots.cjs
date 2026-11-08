@@ -161,6 +161,27 @@ const fs = require('fs');
   if (await page.locator('.extracted-field').count() < 5) throw new Error('Document Intelligence extraction field review is incomplete.');
   await shot('13-document-intelligence');
 
+  await go('imports');
+  await page.locator('#importFile').setInputFiles({ name: 'customers-preview.csv', mimeType: 'text/csv', buffer: Buffer.from('name,email,company\\nJane Doe,jane@example.com,Acme\\nJohn Doe,john@example.com,Acme') });
+  await page.locator('[data-action="import-dry-run"]').click();
+  if (!(await page.locator('#importValidation').innerText()).includes('Dry run passed')) throw new Error('Valid CSV rows did not pass the import dry run.');
+  await page.locator('[data-action="import-commit"]').click();
+  if (!(await page.locator('#importValidation').innerText()).includes('Dry run confirmed')) throw new Error('Demo import confirmation did not preserve the no-write preview boundary.');
+  await page.locator('[data-action="import-reset"]').click();
+  await page.locator('#importFile').setInputFiles({ name: 'duplicates-preview.csv', mimeType: 'text/csv', buffer: Buffer.from('name,email,company\\nJane Doe,jane@example.com,Acme\\nJane Duplicate,jane@example.com,Acme') });
+  await page.locator('[data-action="import-dry-run"]').click();
+  if (!(await page.locator('#importValidation').innerText()).includes('Duplicate candidates')) throw new Error('Import preview did not detect duplicate email candidates.');
+  await shot('13a-import-centre');
+
+  await go('integrations');
+  await page.locator('[data-action="integration-scopes"]').first().click();
+  if (!(await page.locator('#modal').innerText()).includes('Not requested')) throw new Error('Integration scope review does not show least-privilege boundaries.');
+  await page.locator('#modal [data-action="close-modal"]').click();
+  await page.locator('[data-action="integration-connect"]').first().click();
+  await page.locator('#modal [data-action="integration-confirm-preview"]').click();
+  if (!(await page.locator('#toast').innerText()).includes('No OAuth request was sent')) throw new Error('Integration preview did not clearly avoid claiming a live connection.');
+  await shot('13b-integrations-api');
+
   await go('projects');
   await page.locator('[data-action="workspace-add-record"]').click();
   const recordInputs = page.locator('#workspaceRecordForm input');
