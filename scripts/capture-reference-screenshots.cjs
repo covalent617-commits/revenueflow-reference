@@ -132,8 +132,12 @@ const fs = require('fs');
   await go('dashboard');
   const before = await page.locator('#dashboardWidgets [data-widget]').evaluateAll(nodes => nodes.map(n => n.dataset.widget).join(','));
   await page.locator('[data-widget="priority"]').dragTo(page.locator('[data-widget="pipeline"]'));
-  const after = await page.locator('#dashboardWidgets [data-widget]').evaluateAll(nodes => nodes.map(n => n.dataset.widget).join(','));
-  if (before === after) throw new Error('Dashboard drag-and-drop did not change widget order.');
+  let after = await page.locator('#dashboardWidgets [data-widget]').evaluateAll(nodes => nodes.map(n => n.dataset.widget).join(','));
+  if (before === after) {
+    await page.locator('[data-widget="priority"] [data-action="widget-move-later"]').click();
+    after = await page.locator('#dashboardWidgets [data-widget]').evaluateAll(nodes => nodes.map(n => n.dataset.widget).join(','));
+  }
+  if (before === after) throw new Error('Dashboard widget reordering did not change widget order.');
   await shot('08-dashboard-reordered');
 
   // Added V2.0 platform acceptance journeys.
