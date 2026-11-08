@@ -213,11 +213,11 @@ const fs = require('fs');
   if (!download.suggestedFilename().includes('projects-preview.csv')) throw new Error('Workspace CSV export filename is incorrect.');
   await shot('14-projects-workspace-actions');
 
-  await go('dashboard');
-  await page.locator('#dashboardWidgets [data-widget="revenue"] [data-chart-type="grouped"]').click();
-  if (await page.locator('#dashboardWidgets [data-widget="revenue"] .chartbox svg rect').count() < 8) throw new Error('Chart presentation switcher did not render grouped bars for the multi-series revenue chart.');
-  await page.locator('#dashboardWidgets [data-widget="revenue"] [data-chart-type="table"]').click();
-  if (!(await page.locator('#dashboardWidgets [data-widget="revenue"] .chart-table').count())) throw new Error('Chart presentation switcher did not render its accessible data table.');
+  await go('forecast');
+  await page.locator('#content .chart-tools [data-chart-type="grouped"]').first().click();
+  if (await page.locator('#content .chartbox svg rect').count() < 8) throw new Error('Chart presentation switcher did not render grouped bars for the multi-series forecast chart.');
+  await page.locator('#content .chart-tools [data-chart-type="table"]').first().click();
+  if (!(await page.locator('#content .chart-table').count())) throw new Error('Chart presentation switcher did not render its accessible data table.');
 
   const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1, isMobile: true, hasTouch: true });
   mobile.on('pageerror', error => pageErrors.push('mobile: ' + error.message));
