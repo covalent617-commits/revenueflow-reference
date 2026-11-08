@@ -208,7 +208,7 @@ const fs = require('fs');
 
   await go('analytics');
   await page.locator('[data-report="0"]').click();
-  await page.locator('#modal [data-chart-type="bar"]').click();
+  await page.locator('#modal [data-chart-type="grouped"]').click();
   if (await page.locator('#modal .chartbox svg rect').count() < 8) throw new Error('Chart presentation switcher did not render a bar chart.');
   await page.locator('#modal [data-chart-type="table"]').click();
   if (!(await page.locator('#modal .chart-table').count())) throw new Error('Chart presentation switcher did not render its accessible data table.');
