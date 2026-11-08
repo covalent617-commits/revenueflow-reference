@@ -148,7 +148,9 @@ const fs = require('fs');
   if (!(await page.locator('#accountSearchResults').innerText()).includes('Global Tech Solutions')) throw new Error('Account-level search did not return an accessible customer record.');
   await page.locator('#accountWorkspaceFilter').selectOption('1');
   await page.locator('#accountSearch').fill('Nigerian');
-  if ((await page.locator('#accountSearchResults').innerText()).includes('Nigerian')) throw new Error('Account search leaked a record from a different workspace scope.');
+  if (!(await page.locator('#accountSearchResults').innerText()).includes('Nigerian Breweries Distribution')) throw new Error('Account search did not return records from the selected workspace.');
+  await page.locator('#accountSearch').fill('Global Tech');
+  if ((await page.locator('#accountSearchResults').innerText()).includes('Global Tech')) throw new Error('Account search leaked a record from a different workspace scope.');
   await shot('10-account-command-centre');
 
   await go('pricing');
