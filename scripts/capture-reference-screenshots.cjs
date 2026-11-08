@@ -136,6 +136,59 @@ const fs = require('fs');
   if (before === after) throw new Error('Dashboard drag-and-drop did not change widget order.');
   await shot('08-dashboard-reordered');
 
+  // Added V2.0 platform acceptance journeys.
+  await go('account');
+  if (await page.locator('.workspace-account-row').count() !== 3) throw new Error('Account Command Centre must list the three accepted workspace memberships.');
+  await page.locator('#accountSearch').fill('Global Tech');
+  if (!(await page.locator('#accountSearchResults').innerText()).includes('Global Tech Solutions')) throw new Error('Account-level search did not return an accessible customer record.');
+  await page.locator('#accountWorkspaceFilter').selectOption('1');
+  await page.locator('#accountSearch').fill('Nigerian');
+  if ((await page.locator('#accountSearchResults').innerText()).includes('Nigerian')) throw new Error('Account search leaked a record from a different workspace scope.');
+  await shot('10-account-command-centre');
+
+  await go('pricing');
+  if (await page.locator('.plan-card').count() !== 5) throw new Error('Plans & Usage must show five workspace plan tiers.');
+  if (!(await page.locator('#content').innerText()).includes('30 days')) throw new Error('Trial policy must be visible in Plans & Usage.');
+  await shot('11-plans-usage');
+
+  await go('workflows');
+  const workflowText = await page.locator('#content').innerText();
+  if (!workflowText.includes('Idempotency') || !workflowText.includes('Execution history') || !workflowText.includes('Awaiting approval')) throw new Error('Workflow Studio is missing governance, approvals or execution history.');
+  await shot('12-workflow-studio');
+
+  await go('documents');
+  if (!(await page.locator('#content').innerText()).includes('Human review required')) throw new Error('Document Intelligence must make human verification explicit.');
+  if (await page.locator('.extracted-field').count() < 5) throw new Error('Document Intelligence extraction field review is incomplete.');
+  await shot('13-document-intelligence');
+
+  await go('projects');
+  await page.locator('[data-action="workspace-add-record"]').click();
+  const recordInputs = page.locator('#workspaceRecordForm input');
+  await recordInputs.nth(0).fill('Browser QA project');
+  await recordInputs.nth(1).fill('QA Customer');
+  await recordInputs.nth(2).fill('Browser QA');
+  await recordInputs.nth(3).fill('Healthy');
+  await recordInputs.nth(4).fill('10000');
+  await recordInputs.nth(5).fill('10%');
+  await page.locator('#workspaceRecordForm button[type="submit"]').click();
+  if (!(await page.locator('#content').innerText()).includes('Browser QA project')) throw new Error('Workspace record creation did not persist within the preview session.');
+  await page.locator('#content tbody tr').filter({ hasText: 'Browser QA project' }).click();
+  if (!(await page.locator('#modal').innerText()).includes('Connected workspace record')) throw new Error('Workspace record detail did not open.');
+  await page.locator('#modal [data-action="close-modal"]').click();
+  const downloadPromise = page.waitForEvent('download');
+  await page.locator('[data-action="export"]').click();
+  const download = await downloadPromise;
+  if (!download.suggestedFilename().includes('projects-preview.csv')) throw new Error('Workspace CSV export filename is incorrect.');
+  await shot('14-projects-workspace-actions');
+
+  await go('analytics');
+  await page.locator('[data-report="0"]').click();
+  await page.locator('#modal [data-chart-type="bar"]').click();
+  if (await page.locator('#modal .chartbox svg rect').count() < 8) throw new Error('Chart presentation switcher did not render a bar chart.');
+  await page.locator('#modal [data-chart-type="table"]').click();
+  if (!(await page.locator('#modal .chart-table').count())) throw new Error('Chart presentation switcher did not render its accessible data table.');
+  await page.locator('#modal [data-action="close-modal"]').click();
+
   const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1, isMobile: true, hasTouch: true });
   mobile.on('pageerror', error => pageErrors.push('mobile: ' + error.message));
   await mobile.goto(base, { waitUntil: 'networkidle' });
