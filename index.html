@@ -305,7 +305,7 @@ function decorateCharts(){
   const groups=[...new Set(points.map(p=>p.series))],dates=[...new Set(points.map(p=>p.date))];
   const choices=['line','bar','grouped','stacked','area','stacked-area','scatter','table'];
   const labels=['Line','Bar','Grouped bar','Stacked bar','Area','Stacked area','Scatter','Table'];
-  const valid=choices.filter(t=>t==='line'||t==='bar'||t==='area'||t==='table'||(t==='grouped'||t==='stacked'||t==='stacked-area')&&groups.length>1||t==='scatter'&&dates.length>=3);
+  const valid=choices.filter(t=>t==='line'||t==='area'||t==='table'||t==='bar'&&groups.length===1||(t==='grouped'||t==='stacked'||t==='stacked-area')&&groups.length>1||t==='scatter'&&dates.length>=3);
   const tools=document.createElement('div');tools.className='chart-tools';tools.setAttribute('role','group');tools.setAttribute('aria-label','Chart presentation');
   const key=(head.querySelector('h2')?.textContent||'chart')+'-'+[...document.querySelectorAll('.chartbox')].indexOf(chart);chart.dataset.chartKey=key;const selected=chartPresentationPrefs[key]||'line';valid.forEach(type=>{const b=document.createElement('button');b.type='button';b.dataset.chartType=type;b.textContent=labels[choices.indexOf(type)];b.setAttribute('aria-pressed',String(type===selected));tools.appendChild(b)});
   card.insertBefore(tools,chart);
