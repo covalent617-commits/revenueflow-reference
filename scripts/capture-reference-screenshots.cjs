@@ -154,7 +154,7 @@ const fs = require('fs');
   await shot('10-account-command-centre');
 
   await go('pricing');
-  if (await page.locator('.plan-card').count() !== 5) throw new Error('Plans & Usage must show five workspace plan tiers.');
+  if (await page.locator('.plan-card').count() !== 4) throw new Error('Plans & Usage must show four draft workspace tiers.');
   if (!(await page.locator('#content').innerText()).includes('Pricing TBD')) throw new Error('Unapproved plan pricing must remain explicitly unset.');
   await shot('11-plans-usage');
 
