@@ -214,6 +214,7 @@ const fs = require('fs');
   await shot('14-projects-workspace-actions');
 
   await go('forecast');
+  console.log('chart diagnostics:', await page.locator('#content .chartbox').count(), await page.locator('#content .chart-tools').count(), await page.locator('#content [data-chart-point]').count());
   await page.locator('#content .chart-tools [data-chart-type="grouped"]').first().click();
   if (await page.locator('#content .chartbox svg rect').count() < 8) throw new Error('Chart presentation switcher did not render grouped bars for the multi-series forecast chart.');
   await page.locator('#content .chart-tools [data-chart-type="table"]').first().click();
