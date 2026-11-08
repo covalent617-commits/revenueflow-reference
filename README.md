@@ -41,7 +41,7 @@ Competitor Intelligence and Lead Intelligence are specialised Sales Intelligence
 - One person may have different roles in different organisations.
 - The organisation owner or an authorised administrator invites people and assigns membership roles. Members cannot choose or elevate their own roles.
 - Role management, invitations, custom roles, permission scopes and audit history live in Settings.
-- The top-bar persona selector is explicitly a **demo-only preview control**, not a real permission or membership editor.
+- The signed-in profile and workspace switcher show each accepted membership role as read-only context. There is no self-service role selector; role administration belongs in Settings and is shown only for Owner/Admin demo memberships.
 
 ## Visual identity and chart language
 
@@ -55,7 +55,7 @@ The interface preserves deep navy and layered blue surfaces while restoring a co
 
 Leak Radar restores its circular risk-distribution visual. It represents active case counts by severity (critical, high and medium), not a composite score. The three primary tabs remain exactly Sales Intelligence, Customer Intelligence and Process Intelligence.
 
-Charts use differentiated series, visible points, date labels, units, legends, hover/focus tooltips and actual-versus-forecast distinctions. The reference includes line, funnel, donut and ranked/progress visualisations. All values remain illustrative.
+Charts use differentiated series, visible points, date labels, units, legends, hover/focus tooltips and actual-versus-forecast distinctions. The reference includes line, bar, grouped bar, stacked bar, area, stacked area, scatter and accessible table presentations where the source dataset supports them. Won is teal and Lost is coral. Every visualisation keeps its measure, series, unit and reporting period clear. All values remain illustrative.
 
 ## Flagship experiences
 
@@ -66,13 +66,18 @@ Charts use differentiated series, visible points, date labels, units, legends, h
 - **Email execution:** contextual right-side compose drawer, preview, draft and explicit send-confirmation flow.
 - **Scheduling:** individual and team booking-page previews, calendar/time-zone and double-booking design considerations.
 - **AI assistant:** persistent contextual panel with desktop drag/resize/minimise and mobile bottom-sheet presentation. Consequential actions require confirmation.
+- **Account Command Centre:** membership-scoped workspace overview, account notifications and a cross-workspace search preview that identifies the source workspace.
+- **Plans & Usage:** four draft tiers, three-seat minimum, 30-day trial and explicitly unapproved pricing; no permanent free plan or silent overage.
+- **Workflow Studio:** one governed engine preview with triggers, conditions, approval, idempotency, bounded retries and execution history.
+- **Document Intelligence:** source-linked extraction fields, confidence, human corrections and verification boundaries.
+- **Operational workspaces:** record detail, related-workspace links, session-only record creation and CSV export for tabular preview workspaces.
 - **Connected lifecycle:** Lead → Opportunity → Quote/Proposal → Approval → Acceptance/Signature → Onboarding → Project Delivery → Invoice → Payment → Customer Success → Renewal.
 
 ## Prototype behaviour and limitations
 
-Implemented reference interactions include navigation, demo persona preview, organisation switching, Settings membership/invitation/role assignment demonstrations, custom role creation preview, search, record details, basic create flows, Leak Radar tab switching, analytics reports, chart tooltips, forecast view, draggable dashboard widgets, simulator controls, saved demo scenarios, email draft/preview/confirmation, portal-link preview and AI assistant interactions.
+Implemented reference interactions include navigation, membership-aware organisation switching, Settings invitation/role assignment demonstrations, custom role creation preview, global and account-level search, record details, session-only create flows, related-workspace navigation, CSV export, Leak Radar tab switching, report-specific Analytics, chart presentation controls, chart expansion, chart tooltips, forecast view, draggable dashboard widgets, simulator controls, saved demo scenarios, email draft/preview/confirmation, portal-link preview, workflow and document verification previews, and AI assistant interactions.
 
-**Browser verification and screenshots:** Chromium smoke tests passed for the core journeys. The run captured nine screenshots (Dashboard, CFO, Leak Radar, Analytics, Forecast, Settings, NGN CFO, reordered Dashboard and mobile Dashboard). [Open the latest main-branch browser run and download its screenshot artifact](https://github.com/covalent617-commits/revenueflow-reference/actions/runs/41681142200). The artifact is retained for 14 days.
+**Browser verification and screenshots:** The current acceptance suite covers organisation memberships and record scoping, AI context, CFO, Leak Radar, all 12 Analytics reports, forecast chart controls, NGN display, Settings, dashboard rearrangement, account search, plans, workflow and document previews, import dry-run, integration scopes, workspace record creation/detail/CSV export and mobile rendering. The latest run is being verified; do not treat source validation or successful deployment as a substitute for a passing browser run.
 
 All business data is illustrative. Local demo changes are held in the browser session only. No production database, payment rail, email provider, calendar, e-signature provider, file storage, authentication service, AI model, or organisation permission service is connected. Provider actions are previews and do not perform external actions.
 
