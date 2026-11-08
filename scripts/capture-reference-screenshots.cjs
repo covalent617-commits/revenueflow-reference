@@ -148,7 +148,7 @@ const fs = require('fs');
 
   await go('pricing');
   if (await page.locator('.plan-card').count() !== 5) throw new Error('Plans & Usage must show five workspace plan tiers.');
-  if (!(await page.locator('#content').innerText()).includes('30 days')) throw new Error('Trial policy must be visible in Plans & Usage.');
+  if (!(await page.locator('#content').innerText()).includes('Pricing TBD')) throw new Error('Unapproved plan pricing must remain explicitly unset.');
   await shot('11-plans-usage');
 
   await go('workflows');
