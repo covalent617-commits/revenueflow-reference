@@ -313,3 +313,29 @@ This follow-up preserves the restored RevenueFlow palette, Leak Radar severity r
 The updated Chromium smoke test is intended to verify: no role selector in the UI; read-only role labels; all three workspace memberships and assigned roles; workspace-specific customer/opportunity data; AI context; restricted membership administration for non-owner roles; grouped Won/Lost bars; categorical dashboard pipeline bars; line charts for revenue/forecast trends; and the existing CFO, Leak Radar, Settings, currency, drag-and-drop and mobile journeys.
 
 The browser test must pass in CI before this refinement is considered verified. This report does not claim live authentication, invitation email delivery, invitee acceptance, backend authorisation, production data isolation or real source-record drilldowns.
+
+## 13. November 8, 2026 — consolidated platform and interaction pass
+
+This pass extends the approved reference without changing the active RevenueFlow application repository.
+
+### Delivered in the reference
+
+- Added an Account Command Centre showing accepted demo workspace memberships, per-workspace notification origins and scoped cross-workspace search.
+- Added Plans & Usage with four draft tiers, a three-internal-seat minimum, 30-day trial, no permanent free plan and Pricing TBD. No unapproved prices or paid overages are represented as final.
+- Added Workflow Studio with a shared trigger/condition/action/approval flow, idempotency safeguards, bounded retry intent, execution history and explicit provider/action preview boundaries.
+- Added Document Intelligence with source-linked sample extraction, confidence indicators, human correction and verification before authoritative financial records.
+- Added session-only record creation, connected-record detail previews, related-workspace navigation and CSV export for supported tabular workspaces. These operations do not write to a production database.
+- Added chart presentation controls for line, bar, grouped bar, stacked bar, area, stacked area, scatter and accessible table views where the dataset supports the view. Chart preferences persist during the browser session. The expand-chart control opens a larger view.
+- Kept Won and Lost visibly distinct (teal/green versus coral/red) and restored labels within the grouped monthly comparison.
+- Fixed DOM collection iteration used by chart initialisation, navigation highlighting and record filtering after Chromium surfaced the runtime defect.
+
+### Verification
+
+- Inline JavaScript syntax and repository validation passed.
+- Chromium acceptance run 42516361975 passed on commit b4dbd1a3c0bbf26677118c27e992d7efa3a5cc7d.
+- The browser run covered organisation membership context and customer/opportunity record scoping, assistant context, CFO access preview, exactly three Leak Radar tabs, all 12 Analytics reports, 24-point revenue and forecast charts, Won/Lost visual labels, NGN formatting, dashboard reordering, Account Command Centre search scoping, four plan tiers and pricing status, workflow/document review, import dry-run and duplicate detection, integration scope preview, session-only project record creation/detail/CSV export, forecast chart controls, mobile rendering and browser runtime errors.
+- Screenshot artifact: revenueflow-reference-screenshots for run 42516361975 (https://github.com/covalent617-commits/revenueflow-reference/actions/runs/42516361975).
+
+### Boundaries that remain
+
+This repository is the full product reference and interaction prototype, not the production application. It does not provide live authentication, database persistence, server-enforced permissions, production tenant isolation, actual invitations, payment processing, email/calendar execution, secure document storage, OCR provider execution, e-signature, OAuth integrations or durable background jobs. The local preview must not be represented as completing those production requirements. Those must be implemented and verified in the separate active application repository.
