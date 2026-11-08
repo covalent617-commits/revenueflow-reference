@@ -172,7 +172,7 @@ const fs = require('fs');
   await page.locator('#importFile').setInputFiles({ name: 'customers-preview.csv', mimeType: 'text/csv', buffer: Buffer.from('name,email,company\nJane Doe,jane@example.com,Acme\nJohn Doe,john@example.com,Acme') });
   await page.waitForFunction(() => { const b = document.querySelector('[data-action="import-dry-run"]'); return b && !b.disabled; });
   await page.locator('[data-action="import-dry-run"]').click();
-  if (!(await page.locator('#importValidation').innerText()).includes('Dry run passed')) throw new Error('Valid CSV rows did not pass the import dry run.');
+  if (!(await page.locator('#importState').innerText()).includes('Dry run passed')) throw new Error('Valid CSV rows did not pass the import dry run.');
   await page.locator('[data-action="import-commit"]').click();
   if (!(await page.locator('#importValidation').innerText()).includes('Dry run confirmed')) throw new Error('Demo import confirmation did not preserve the no-write preview boundary.');
   await page.locator('[data-action="import-reset"]').click();
