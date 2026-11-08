@@ -169,13 +169,13 @@ const fs = require('fs');
   await shot('13-document-intelligence');
 
   await go('imports');
-  await page.locator('#importFile').setInputFiles({ name: 'customers-preview.csv', mimeType: 'text/csv', buffer: Buffer.from('name,email,company\\nJane Doe,jane@example.com,Acme\\nJohn Doe,john@example.com,Acme') });
+  await page.locator('#importFile').setInputFiles({ name: 'customers-preview.csv', mimeType: 'text/csv', buffer: Buffer.from('name,email,company\nJane Doe,jane@example.com,Acme\nJohn Doe,john@example.com,Acme') });
   await page.locator('[data-action="import-dry-run"]').click();
   if (!(await page.locator('#importValidation').innerText()).includes('Dry run passed')) throw new Error('Valid CSV rows did not pass the import dry run.');
   await page.locator('[data-action="import-commit"]').click();
   if (!(await page.locator('#importValidation').innerText()).includes('Dry run confirmed')) throw new Error('Demo import confirmation did not preserve the no-write preview boundary.');
   await page.locator('[data-action="import-reset"]').click();
-  await page.locator('#importFile').setInputFiles({ name: 'duplicates-preview.csv', mimeType: 'text/csv', buffer: Buffer.from('name,email,company\\nJane Doe,jane@example.com,Acme\\nJane Duplicate,jane@example.com,Acme') });
+  await page.locator('#importFile').setInputFiles({ name: 'duplicates-preview.csv', mimeType: 'text/csv', buffer: Buffer.from('name,email,company\nJane Doe,jane@example.com,Acme\nJane Duplicate,jane@example.com,Acme') });
   await page.locator('[data-action="import-dry-run"]').click();
   if (!(await page.locator('#importValidation').innerText()).includes('Duplicate candidates')) throw new Error('Import preview did not detect duplicate email candidates.');
   await shot('13a-import-centre');
