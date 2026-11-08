@@ -202,7 +202,7 @@ const fs = require('fs');
   await recordInputs.nth(5).fill('10%');
   await page.locator('#workspaceRecordForm button[type="submit"]').click();
   if (!(await page.locator('#content').innerText()).includes('Browser QA project')) throw new Error('Workspace record creation did not persist within the preview session.');
-  await page.locator('#content tbody tr').filter({ hasText: 'Browser QA project' }).locator('td').first().click();
+  await page.locator('#content tbody tr').filter({ hasText: 'Browser QA project' }).locator('[data-action="workspace-record-open"]').click();
   await page.locator('#modal .eyebrow').filter({ hasText: 'Connected workspace record' }).waitFor();
   if (!(await page.locator('#modal').innerText()).includes('Connected workspace record')) throw new Error('Workspace record detail did not open.');
   await page.locator('#modal [data-action="close-modal"]').click();
