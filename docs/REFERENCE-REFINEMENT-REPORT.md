@@ -339,3 +339,18 @@ This pass extends the approved reference without changing the active RevenueFlow
 ### Boundaries that remain
 
 This repository is the full product reference and interaction prototype, not the production application. It does not provide live authentication, database persistence, server-enforced permissions, production tenant isolation, actual invitations, payment processing, email/calendar execution, secure document storage, OCR provider execution, e-signature, OAuth integrations or durable background jobs. The local preview must not be represented as completing those production requirements. Those must be implemented and verified in the separate active application repository.
+
+
+## 14. November 16, 2026 — additive roadmap expansion
+
+### Approved roadmap additions
+
+- Added per-user typography controls in Settings: curated font selection, adjustable character/text size, live preview, independent and combined reset, persistent personal preferences and consistent application across every workspace and responsive layout.
+- Added an Appearance & Accessibility baseline covering keyboard navigation, visible focus, screen-reader semantics, contrast, reduced motion, non-colour-only cues, chart/table alternatives and WCAG 2.2 AA validation gates.
+- Added Personal AI Inbox as a first-class Intelligence workspace for proactive evidence-backed briefs, explainable recommendations, uncertainty, contextual conversations, user correction and human-controlled actions.
+- Added Team AI Inbox as a distinct shared Intelligence workspace for permission-aware cross-functional coordination, assignment, acceptance, progress, escalation and auditable handoffs.
+- Added shared inbox governance requirements: tenant/record permissions, source traceability, calibrated uncertainty, adversarial-content defence, governed memory, action approvals, observability, quality evaluation, failure recovery and capacity management that preserves essential operational awareness.
+
+### Status and boundaries
+
+These are approved product-roadmap requirements recorded in the master blueprint. This documentation change does not claim that font controls, accessibility certification, production AI, mailbox connectivity, team collaboration persistence, backend authorisation or audit enforcement have been implemented. Reference UI and production delivery must be verified separately. All prior blueprint requirements remain in force.
