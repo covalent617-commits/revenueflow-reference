@@ -73,6 +73,10 @@ Charts use differentiated series, visible points, date labels, units, legends, h
 - **Operational workspaces:** record detail, related-workspace links, session-only record creation and CSV export for tabular preview workspaces.
 - **Connected lifecycle:** Lead → Opportunity → Quote/Proposal → Approval → Acceptance/Signature → Onboarding → Project Delivery → Invoice → Payment → Customer Success → Renewal.
 
+## Personal AI Inbox, Team AI Inbox and accessibility
+
+The approved roadmap includes a personal AI Inbox for evidence-backed, explainable intelligence conversations and a separate Team AI Inbox for permission-aware cross-functional coordination. Both must preserve uncertainty, source traceability, user control, approvals and audit history; neither is a generic mailbox replacement. Settings also includes per-user font-family and text-size preferences, live preview/reset, persistent cross-workspace application and a tested accessibility baseline (keyboard, screen reader, contrast, reduced motion and responsive reflow). These are product requirements; reference interactions must not be mistaken for production AI, persistence or backend enforcement.
+
 ## Prototype behaviour and limitations
 
 Implemented reference interactions include navigation, membership-aware organisation switching, Settings invitation/role assignment demonstrations, custom role creation preview, global and account-level search, record details, session-only create flows, related-workspace navigation, CSV export, Leak Radar tab switching, report-specific Analytics, chart presentation controls, chart expansion, chart tooltips, forecast view, draggable dashboard widgets, simulator controls, saved demo scenarios, email draft/preview/confirmation, portal-link preview, workflow and document verification previews, and AI assistant interactions.
